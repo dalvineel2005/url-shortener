@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - URL Shortener</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: rgba(22, 28, 45, 0.6);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.4);
+            --primary-hover: #4f46e5;
+            --accent: #d946ef;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --success: #10b981;
+            --success-glow: rgba(16, 185, 129, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(217, 70, 239, 0.1) 0%, transparent 45%);
+            background-attachment: fixed;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo svg {
+            stroke: var(--primary);
+            width: 24px;
+            height: 24px;
+        }
+
+        .user-nav {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .user-nav span {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .btn-logout {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0.5rem 1.25rem;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            transition: all 0.2s ease;
+        }
+
+        .btn-logout:hover {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.4);
+            color: #ef4444;
+        }
+
+        main {
+            flex: 1;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 2rem 3rem 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .generator-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .generator-section h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .input-group input {
+            flex: 1;
+            padding: 1rem 1.25rem;
+            border-radius: 10px;
+            border: 1px solid var(--card-border);
+            background: rgba(15, 23, 42, 0.6);
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-glow);
+        }
+
+        .btn-primary {
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(135deg, var(--primary), #818cf8);
+            color: white;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px var(--primary-glow);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--primary-hover), var(--primary));
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px var(--primary-glow);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .success-banner {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .success-banner-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .success-banner-title {
+            color: var(--success);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .success-banner-link {
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 500;
+            word-break: break-all;
+            border-bottom: 1px dashed var(--primary);
+            transition: color 0.2s ease;
+        }
+
+        .success-banner-link:hover {
+            color: var(--primary);
+        }
+
+        .btn-copy {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-copy:hover {
+            background: rgba(16, 185, 129, 0.25);
+        }
+
+        .table-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            padding: 1rem 1.25rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        td {
+            padding: 1.25rem;
+            font-size: 0.95rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            vertical-align: middle;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .td-sno {
+            color: var(--text-muted);
+            width: 80px;
+        }
+
+        .short-link-cell a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .short-link-cell a:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        .redirect-link-cell {
+            max-width: 400px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--text-muted);
+        }
+
+        .clicks-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--primary);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .no-data {
+            padding: 3rem 0;
+            text-align: center;
+            color: var(--text-muted);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .no-data svg {
+            width: 48px;
+            height: 48px;
+            stroke: rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
+            </svg>
+            <span>SnapURL</span>
+        </div>
+        <div class="user-nav">
+            <span>Welcome Back</span>
+            <a href="/user/logout" class="btn-logout">Logout</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Generator Card -->
+        <div class="glass-card generator-section">
+            <h2>Shorten a long link</h2>
+            
+            <% if (typeof id !== "undefined" && id) { %>
+                <div class="success-banner" id="successBanner">
+                    <div class="success-banner-content">
+                        <span class="success-banner-title">URL shortened successfully!</span>
+                        <a href="/url/<%= id %>" target="_blank" class="success-banner-link" id="generatedLink">
+                            /url/<%= id %>
+                        </a>
+                    </div>
+                    <button class="btn-copy" onclick="copyToClipboard()">Copy</button>
+                </div>
+                <script>
+                    // Set full hostname dynamically if not passed from server
+                    const linkEl = document.getElementById('generatedLink');
+                    if (linkEl && !linkEl.textContent.trim().startsWith('http')) {
+                        const fullUrl = window.location.origin + '/url/<%= id %>';
+                        linkEl.textContent = fullUrl;
+                        linkEl.href = fullUrl;
+                    }
+
+                    function copyToClipboard() {
+                        const linkText = document.getElementById('generatedLink').href;
+                        navigator.clipboard.writeText(linkText).then(() => {
+                            const btn = document.querySelector('.btn-copy');
+                            btn.textContent = 'Copied!';
+                            btn.style.background = 'rgba(16, 185, 129, 0.3)';
+                            setTimeout(() => {
+                                btn.textContent = 'Copy';
+                                btn.style.background = 'rgba(16, 185, 129, 0.15)';
+                            }, 2000);
+                        });
+                    }
+                </script>
+            <% } %>
+
+            <form method="POST" action="/url">
+                <div class="input-group">
+                    <input 
+                        type="text" 
+                        name="url" 
+                        required 
+                        placeholder="Paste your long URL here (e.g. https://example.com/very-long-path)"
+                        autocomplete="off"
+                    />
+                    <button type="submit" class="btn-primary">Shorten</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Table Card -->
+        <div class="glass-card table-section">
+            <div class="table-header">
+                <h2>Your shortened links</h2>
+            </div>
+
+            <div class="table-container">
+                <% if (urls && urls.length > 0) { %>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="td-sno">S.No</th>
+                                <th>Short URL</th>
+                                <th>Original URL</th>
+                                <th style="text-align: center;">Clicks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% urls.forEach((url, index) => { %>
+                                <tr>
+                                    <td class="td-sno"><%= index + 1 %></td>
+                                    <td class="short-link-cell">
+                                        <a href="/url/<%= url.shortId %>" target="_blank" class="short-link-anchor">
+                                            /url/<%= url.shortId %>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <div class="redirect-link-cell" title="<%= url.redirectURL %>">
+                                            <%= url.redirectURL %>
+                                        </div>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <span class="clicks-badge"><%= url.visitHistory.length %></span>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                    <script>
+                        // Dynamically update relative paths to absolute paths for absolute clarity
+                        document.querySelectorAll('.short-link-anchor').forEach(el => {
+                            const relativePath = el.getAttribute('href');
+                            el.textContent = window.location.origin + relativePath;
+                        });
+                    </script>
+                <% } else { %>
+                    <div class="no-data">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
+                        </svg>
+                        <p>No links shortened yet. Paste a link above to get started!</p>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
