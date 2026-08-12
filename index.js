@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 8001;
 
 // Database is connected automatically via Upstash Redis HTTP client.
 app.set("view engine", "ejs");
-app.set("views",path.resolve("./views"));
+app.set("views", path.join(__dirname, "views"));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
