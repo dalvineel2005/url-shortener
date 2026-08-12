@@ -24,7 +24,7 @@ async function getUrlsByShortIds(shortIds) {
     for (const id of shortIds) {
         const url = await redis.hgetall(`url:${id}`);
         if (url && url.shortId) {
-            url.visitHistory = url.visitHistory ? JSON.parse(url.visitHistory) : [];
+            url.visitHistory = typeof url.visitHistory === 'string' ? JSON.parse(url.visitHistory) : (url.visitHistory || []);
             urls.push(url);
         }
     }
@@ -45,7 +45,7 @@ async function findOneUrl(query) {
     if (query && query.shortId) {
         const url = await redis.hgetall(`url:${query.shortId}`);
         if (!url || Object.keys(url).length === 0) return null;
-        url.visitHistory = url.visitHistory ? JSON.parse(url.visitHistory) : [];
+        url.visitHistory = typeof url.visitHistory === 'string' ? JSON.parse(url.visitHistory) : (url.visitHistory || []);
         return url;
     }
     return null;
