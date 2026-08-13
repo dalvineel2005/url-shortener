@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f8f9fa; }
+        .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .card { border: 1px solid #dee2e6; padding: 20px; border-radius: 8px; margin-bottom: 20px; background-color: #ffffff; }
+        .error { color: #dc3545; }
+        .success { color: #28a745; font-weight: bold; }
+        input, select, button { padding: 10px; margin: 5px 0; width: 100%; box-sizing: border-box; border: 1px solid #ced4da; border-radius: 4px; }
+        button { background-color: #007bff; color: white; border: none; cursor: pointer; font-weight: bold; }
+        button:hover { background-color: #0056b3; }
+        h1 { color: #343a40; text-align: center; }
+        a { color: #007bff; text-decoration: none; display: block; text-align: center; margin-top: 10px; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📈 Stock Dashboard</h1>
+        <p style="text-align: center; color: #6c757d;">Search for a stock symbol (e.g., AAPL for Apple, RELIANCE.NS for Reliance India).</p>
+
+        <div class="card">
+            <h3>Get Live Price</h3>
+            <form action="/stocks/price" method="POST">
+                <input type="text" name="symbol" placeholder="Enter Stock Symbol (e.g., RELIANCE.NS)" required value="<%= locals.symbol ? symbol : '' %>">
+                <button type="submit">Get Price</button>
+            </form>
+            
+            <% if (locals.price) { %>
+                <h2 style="color: #28a745; text-align: center;">Current Price: <%= price %></h2>
+            <% } %>
+
+            <% if (locals.error) { %>
+                <p class="<%= locals.price ? 'error' : (error.includes('Successfully') ? 'success' : 'error') %>" style="text-align: center;"><%= error %></p>
+            <% } %>
+        </div>
+
+        <% if (locals.price) { %>
+        <div class="card">
+            <h3>Place Order</h3>
+            <form action="/stocks/trade" method="POST">
+                <input type="hidden" name="symbol" value="<%= symbol %>">
+                <select name="action">
+                    <option value="BUY">BUY</option>
+                    <option value="SELL">SELL</option>
+                </select>
+                <input type="number" name="quantity" placeholder="Quantity" required min="1">
+                <button type="submit" style="background-color: #28a745;">Execute Trade (Mock)</button>
+            </form>
+        </div>
+        <% } %>
+        
+        <a href="/">Back to URL Shortener</a>
+    </div>
+</body>
+</html>
