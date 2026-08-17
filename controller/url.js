@@ -779,13 +779,9 @@ async function handleQRCode(
         return res.render(
             "qr",
             {
-
                 shortId,
-
-                fullUrl,
-
-                qrImage,
-
+                shortUrl: fullUrl,
+                qrCode: qrImage,
             }
         );
 
