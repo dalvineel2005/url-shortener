@@ -208,6 +208,7 @@ async function handleGenerateNewShortURL(req, res) {
             id: null,
             urls: await URL.find({ createdBy: req.user._id }),
             error: "Please enter a password for this link",
+            protectWithPassword: true,
         });
     }
 
@@ -221,6 +222,7 @@ async function handleGenerateNewShortURL(req, res) {
             id: null,
             urls: await URL.find({ createdBy: req.user._id }),
             error: "Link password must be at least 6 characters",
+            protectWithPassword: true,
         });
     }
 
