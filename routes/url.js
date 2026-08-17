@@ -1,12 +1,43 @@
 const express = require("express");
+
 const {
-  handleGenerateNewShortURL,
-  handleGetAnalytics,
+    handleGenerateNewShortURL,
+    handleGetAnalytics,
+    handleQRCode,
 } = require("../controller/url");
+
 
 const router = express.Router();
 
-router.post("/", handleGenerateNewShortURL);
-router.get("/analytics/:shortId", handleGetAnalytics);
+
+// ==========================================
+// CREATE SHORT URL
+// ==========================================
+
+router.post(
+    "/",
+    handleGenerateNewShortURL
+);
+
+
+// ==========================================
+// ANALYTICS
+// ==========================================
+
+router.get(
+    "/analytics/:shortId",
+    handleGetAnalytics
+);
+
+
+// ==========================================
+// QR CODE
+// ==========================================
+
+router.get(
+    "/qr/:shortId",
+    handleQRCode
+);
+
 
 module.exports = router;

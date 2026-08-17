@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>QR Code - SnapURL</title>
+
+
+    <style>
+
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: rgba(22, 28, 45, 0.8);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --primary: #6366f1;
+            --accent: #d946ef;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+        }
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    rgba(99, 102, 241, 0.2),
+                    transparent 40%
+                ),
+                var(--bg-color);
+
+            color: var(--text-main);
+
+            font-family: Arial, sans-serif;
+        }
+
+
+        .card {
+
+            width: 100%;
+
+            max-width: 500px;
+
+            text-align: center;
+
+            padding: 35px;
+
+            background: var(--card-bg);
+
+            border: 1px solid var(--card-border);
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 20px 50px
+                rgba(0, 0, 0, 0.4);
+        }
+
+
+        h1 {
+
+            margin-top: 0;
+
+            margin-bottom: 10px;
+        }
+
+
+        .description {
+
+            color: var(--text-muted);
+
+            margin-bottom: 25px;
+        }
+
+
+        .qr-wrapper {
+
+            display: flex;
+
+            justify-content: center;
+
+            margin: 20px 0;
+        }
+
+
+        .qr-wrapper img {
+
+            width: 320px;
+
+            max-width: 100%;
+
+            padding: 10px;
+
+            background: white;
+
+            border-radius: 12px;
+        }
+
+
+        .short-url {
+
+            color: var(--primary);
+
+            word-break: break-all;
+
+            margin: 20px 0;
+        }
+
+
+        .buttons {
+
+            display: flex;
+
+            gap: 12px;
+
+            justify-content: center;
+
+            flex-wrap: wrap;
+        }
+
+
+        .btn {
+
+            display: inline-block;
+
+            padding: 12px 20px;
+
+            border-radius: 9px;
+
+            text-decoration: none;
+
+            border: none;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            font-weight: 600;
+        }
+
+
+        .btn-primary {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    #818cf8
+                );
+
+            color: white;
+        }
+
+
+        .btn-secondary {
+
+            background:
+                rgba(255, 255, 255, 0.06);
+
+            border:
+                1px solid var(--card-border);
+
+            color: var(--text-main);
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="card">
+
+        <h1>
+            QR Code
+        </h1>
+
+
+        <p class="description">
+            Scan this QR code to open your short URL.
+        </p>
+
+
+        <div class="qr-wrapper">
+
+            <img
+                src="<%= qrCode %>"
+                alt="QR Code for <%= shortUrl %>"
+                id="qrImage"
+            >
+
+        </div>
+
+
+        <div class="short-url">
+            <%= shortUrl %>
+        </div>
+
+
+        <div class="buttons">
+
+            <button
+                class="btn btn-primary"
+                onclick="downloadQR()"
+            >
+                Download PNG
+            </button>
+
+
+            <a
+                href="/"
+                class="btn btn-secondary"
+            >
+                ← Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        function downloadQR() {
+
+            const image =
+                document.getElementById(
+                    "qrImage"
+                );
+
+
+            const link =
+                document.createElement(
+                    "a"
+                );
+
+
+            link.href =
+                image.src;
+
+            link.download =
+                "<%= shortId %>-qr.png";
+
+
+            document.body.appendChild(
+                link
+            );
+
+
+            link.click();
+
+
+            document.body.removeChild(
+                link
+            );
+        }
+
+    </script>
+
+</body>
+
+</html>

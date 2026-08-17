@@ -2,26 +2,14 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Dashboard - URL Shortener</title>
+    <title>Dashboard - SnapURL</title>
 
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
-
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-        crossorigin
-    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
@@ -31,15 +19,14 @@
     <style>
 
         :root {
-            --bg-color: #0b0f19;
-            --card-bg: rgba(22, 28, 45, 0.6);
-            --card-border: rgba(255, 255, 255, 0.08);
+            --bg: #0b0f19;
+            --card: rgba(22, 28, 45, 0.75);
+            --border: rgba(255,255,255,0.08);
             --primary: #6366f1;
-            --primary-glow: rgba(99, 102, 241, 0.4);
             --primary-hover: #4f46e5;
             --accent: #d946ef;
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
+            --text: #f3f4f6;
+            --muted: #9ca3af;
             --success: #10b981;
             --danger: #ef4444;
         }
@@ -52,328 +39,219 @@
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            background: var(--bg);
+            color: var(--text);
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
 
             background-image:
                 radial-gradient(
                     circle at 10% 20%,
-                    rgba(99, 102, 241, 0.15),
+                    rgba(99,102,241,0.15),
                     transparent 40%
                 ),
                 radial-gradient(
                     circle at 90% 80%,
-                    rgba(217, 70, 239, 0.1),
+                    rgba(217,70,239,0.10),
                     transparent 45%
                 );
 
             background-attachment: fixed;
         }
 
-        /* ==========================================
-           HEADER
-        ========================================== */
-
         header {
+            max-width: 1200px;
+            width: 100%;
+            margin: auto;
+            padding: 1.5rem 2rem;
+
             display: flex;
             justify-content: space-between;
             align-items: center;
-
-            padding: 1.5rem 2rem;
-
-            max-width: 1200px;
-            width: 100%;
-            margin: 0 auto;
         }
 
         .logo {
             font-size: 1.5rem;
             font-weight: 700;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    var(--primary),
-                    var(--accent)
-                );
+            background: linear-gradient(
+                135deg,
+                var(--primary),
+                var(--accent)
+            );
 
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .logo svg {
-            stroke: var(--primary);
-            width: 24px;
-            height: 24px;
         }
 
         .user-nav {
             display: flex;
             align-items: center;
-            gap: 1.5rem;
+            gap: 1rem;
         }
 
         .user-nav span {
-            color: var(--text-muted);
+            color: var(--muted);
             font-size: 0.9rem;
         }
 
         .btn-logout {
-            color: var(--text-main);
+            color: var(--text);
             text-decoration: none;
 
-            font-size: 0.9rem;
-            font-weight: 500;
-
-            padding: 0.5rem 1.25rem;
+            padding: 0.5rem 1rem;
 
             border-radius: 8px;
 
-            background: rgba(255, 255, 255, 0.05);
-
-            border: 1px solid var(--card-border);
-
-            transition: all 0.2s ease;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
         }
 
         .btn-logout:hover {
-            background: rgba(239, 68, 68, 0.2);
-
-            border-color:
-                rgba(239, 68, 68, 0.4);
-
-            color: var(--danger);
+            color: #fca5a5;
+            border-color: rgba(239,68,68,0.4);
         }
 
-        /* ==========================================
-           MAIN
-        ========================================== */
-
         main {
-            flex: 1;
-
             max-width: 1200px;
             width: 100%;
-
-            margin: 0 auto;
+            margin: auto;
 
             padding: 0 2rem 3rem;
 
             display: flex;
             flex-direction: column;
-
             gap: 2rem;
         }
 
-        /* ==========================================
-           GLASS CARD
-        ========================================== */
-
-        .glass-card {
-            background: var(--card-bg);
-
+        .card {
+            background: var(--card);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
 
-            border: 1px solid var(--card-border);
-
+            border: 1px solid var(--border);
             border-radius: 16px;
 
             padding: 2rem;
 
             box-shadow:
-                0 8px 32px
-                rgba(0, 0, 0, 0.37);
+                0 8px 32px rgba(0,0,0,0.37);
         }
 
-        /* ==========================================
-           GENERATOR
-        ========================================== */
-
-        .generator-section {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .generator-section h2 {
+        h2 {
+            margin-bottom: 1.5rem;
             font-size: 1.25rem;
-            font-weight: 600;
         }
 
-        .input-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+        .form-group {
+            margin-bottom: 1rem;
         }
 
-        .input-group {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .input-group input,
-        .input-group select {
-            flex: 1;
+        input,
+        select {
+            width: 100%;
 
             padding: 1rem 1.25rem;
 
             border-radius: 10px;
 
-            border: 1px solid var(--card-border);
+            border: 1px solid var(--border);
 
-            background:
-                rgba(15, 23, 42, 0.6);
+            background: rgba(15,23,42,0.8);
 
-            color: var(--text-main);
+            color: var(--text);
 
             font-family: inherit;
             font-size: 1rem;
 
             outline: none;
-
-            transition: all 0.2s ease;
         }
 
-        .input-group input:focus,
-        .input-group select:focus {
+        input:focus,
+        select:focus {
             border-color: var(--primary);
 
             box-shadow:
                 0 0 0 3px
-                var(--primary-glow);
+                rgba(99,102,241,0.2);
         }
 
-        .input-help {
-            color: var(--text-muted);
+        .help {
+            color: var(--muted);
             font-size: 0.8rem;
-            margin-top: -0.5rem;
+            margin-top: 0.4rem;
         }
 
-        /* ==========================================
-           EXPIRATION
-        ========================================== */
+        /* PASSWORD */
 
-        .custom-date-group {
-            display: none;
+        .password-box {
+            margin-top: 1rem;
+            padding: 1rem;
 
-            flex-direction: column;
-            gap: 0.5rem;
+            border-radius: 12px;
+
+            border: 1px solid rgba(99,102,241,0.25);
+
+            background: rgba(99,102,241,0.07);
         }
 
-        .custom-date-group label {
-            color: var(--text-muted);
-            font-size: 0.85rem;
+        .password-label {
+            display: block;
+
+            font-size: 0.9rem;
+            font-weight: 600;
+
+            margin-bottom: 0.7rem;
         }
 
-        .custom-date-group input {
-            padding: 1rem 1.25rem;
-
-            border-radius: 10px;
-
-            border: 1px solid var(--card-border);
-
-            background:
-                rgba(15, 23, 42, 0.6);
-
-            color: var(--text-main);
-
-            font-family: inherit;
-
-            outline: none;
+        .password-input {
+            width: 100%;
         }
 
-        /* ==========================================
-           PASSWORD PROTECTION
-        ========================================== */
-
-        .password-section {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .password-toggle {
+        .password-checkbox {
             display: flex;
             align-items: center;
 
-            gap: 0.65rem;
-
-            color: var(--text-main);
-
-            font-size: 0.95rem;
-            font-weight: 500;
+            gap: 0.7rem;
 
             cursor: pointer;
-            user-select: none;
+
+            font-weight: 600;
         }
 
-        .password-toggle input {
+        .password-checkbox input {
             width: 18px;
             height: 18px;
-
-            flex: none;
 
             accent-color: var(--primary);
 
             cursor: pointer;
         }
 
-        .link-password-group {
+        .password-box {
             display: none;
-
-            flex-direction: column;
-
-            gap: 0.5rem;
         }
 
-        .link-password-group input {
-            width: 100%;
+        /*
+         IMPORTANT:
 
-            padding: 1rem 1.25rem;
+         :has() makes the password field appear
+         immediately when checkbox is selected.
+        */
 
-            border-radius: 10px;
-
-            border: 1px solid var(--card-border);
-
-            background:
-                rgba(15, 23, 42, 0.6);
-
-            color: var(--text-main);
-
-            font-family: inherit;
-
-            font-size: 1rem;
-
-            outline: none;
+        .password-section:has(
+            #protectWithPassword:checked
+        ) .password-box {
+            display: block;
         }
-
-        .link-password-group input:focus {
-            border-color: var(--primary);
-
-            box-shadow:
-                0 0 0 3px
-                var(--primary-glow);
-        }
-
-        /* ==========================================
-           PRIMARY BUTTON
-        ========================================== */
 
         .btn-primary {
+            width: 100%;
+
             padding: 1rem 2rem;
 
-            border-radius: 10px;
-
             border: none;
+            border-radius: 10px;
 
             background:
                 linear-gradient(
@@ -385,18 +263,12 @@
             color: white;
 
             font-family: inherit;
-
             font-size: 1rem;
-
             font-weight: 600;
 
             cursor: pointer;
 
-            transition: all 0.2s ease;
-
-            box-shadow:
-                0 4px 12px
-                var(--primary-glow);
+            margin-top: 0.5rem;
         }
 
         .btn-primary:hover {
@@ -406,185 +278,75 @@
                     var(--primary-hover),
                     var(--primary)
                 );
-
-            transform: translateY(-1px);
-
-            box-shadow:
-                0 6px 16px
-                var(--primary-glow);
         }
 
-        /* ==========================================
-           ERROR
-        ========================================== */
+        .error {
+            padding: 1rem;
+            margin-bottom: 1rem;
 
-        .error-banner {
-            background:
-                rgba(239, 68, 68, 0.1);
+            border-radius: 10px;
 
-            border:
-                1px solid
-                rgba(239, 68, 68, 0.3);
+            background: rgba(239,68,68,0.1);
+
+            border: 1px solid rgba(239,68,68,0.3);
 
             color: #fca5a5;
-
-            border-radius: 12px;
-
-            padding: 1rem 1.5rem;
         }
 
-        /* ==========================================
-           SUCCESS
-        ========================================== */
+        .success {
+            padding: 1rem;
 
-        .success-banner {
-            background:
-                rgba(16, 185, 129, 0.1);
+            margin-bottom: 1.5rem;
 
-            border:
-                1px solid
-                rgba(16, 185, 129, 0.25);
+            border-radius: 10px;
 
-            border-radius: 12px;
+            background: rgba(16,185,129,0.1);
 
-            padding: 1rem 1.5rem;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
+            border: 1px solid rgba(16,185,129,0.3);
         }
 
-        .success-banner-content {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-        }
-
-        .success-banner-title {
+        .success-title {
             color: var(--success);
-
             font-weight: 600;
-            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
         }
 
-        .success-banner-link {
-            color: var(--text-main);
-
-            text-decoration: none;
-
-            font-weight: 500;
-
+        .success a {
+            color: white;
             word-break: break-all;
-
-            border-bottom:
-                1px dashed
-                var(--primary);
         }
 
-        .success-banner-link:hover {
-            color: var(--primary);
-        }
-
-        .btn-copy {
-            padding: 0.5rem 1rem;
-
-            border-radius: 6px;
-
-            border:
-                1px solid
-                rgba(16, 185, 129, 0.3);
-
-            background:
-                rgba(16, 185, 129, 0.15);
-
-            color: var(--success);
-
-            font-family: inherit;
-
-            font-weight: 600;
-
-            font-size: 0.85rem;
-
-            cursor: pointer;
-        }
-
-        /* ==========================================
-           TABLE
-        ========================================== */
-
-        .table-section {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .table-header h2 {
-            font-size: 1.25rem;
-            font-weight: 600;
-        }
-
-        .table-container {
+        .table-wrapper {
             width: 100%;
             overflow-x: auto;
         }
 
         table {
             width: 100%;
-
             border-collapse: collapse;
-
-            text-align: left;
         }
 
         th {
-            padding: 1rem 1.25rem;
+            text-align: left;
 
-            color: var(--text-muted);
+            padding: 1rem;
 
-            font-size: 0.85rem;
+            color: var(--muted);
 
-            font-weight: 600;
+            font-size: 0.8rem;
 
-            text-transform: uppercase;
-
-            letter-spacing: 0.05em;
-
-            border-bottom:
-                1px solid
-                var(--card-border);
-
-            white-space: nowrap;
+            border-bottom: 1px solid var(--border);
         }
 
         td {
-            padding: 1.25rem;
-
-            font-size: 0.95rem;
+            padding: 1rem;
 
             border-bottom:
                 1px solid
-                rgba(255, 255, 255, 0.04);
-
-            vertical-align: middle;
+                rgba(255,255,255,0.04);
         }
 
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        tr:hover td {
-            background:
-                rgba(255, 255, 255, 0.01);
-        }
-
-        .td-sno {
-            color: var(--text-muted);
-            width: 80px;
-        }
-
-        .short-link-cell a {
+        .short-link {
             color: var(--primary);
 
             text-decoration: none;
@@ -592,185 +354,85 @@
             font-weight: 600;
         }
 
-        .short-link-cell a:hover {
+        .short-link:hover {
             color: var(--accent);
-            text-decoration: underline;
         }
 
-        .redirect-link-cell {
-            max-width: 400px;
-
-            white-space: nowrap;
+        .original-url {
+            max-width: 350px;
 
             overflow: hidden;
 
             text-overflow: ellipsis;
 
-            color: var(--text-muted);
+            white-space: nowrap;
+
+            color: var(--muted);
         }
 
-        /* ==========================================
-           BADGES
-        ========================================== */
+        .badge {
+            display: inline-block;
 
-        .clicks-badge {
-            display: inline-flex;
+            padding: 0.35rem 0.7rem;
 
-            align-items: center;
-
-            justify-content: center;
-
-            padding: 0.25rem 0.75rem;
-
-            border-radius: 9999px;
-
-            font-size: 0.85rem;
-
-            font-weight: 600;
-
-            background:
-                rgba(99, 102, 241, 0.15);
-
-            color: var(--primary);
-
-            border:
-                1px solid
-                rgba(99, 102, 241, 0.2);
-        }
-
-        .expiration-badge {
-            display: inline-flex;
-
-            align-items: center;
-
-            padding: 0.35rem 0.65rem;
-
-            border-radius: 9999px;
+            border-radius: 999px;
 
             font-size: 0.75rem;
 
             font-weight: 600;
-
-            background:
-                rgba(99, 102, 241, 0.12);
-
-            color: #a5b4fc;
-
-            white-space: nowrap;
         }
 
-        .expiration-badge.expired {
-            background:
-                rgba(239, 68, 68, 0.12);
-
-            color: #fca5a5;
-        }
-
-        .expiration-badge.never {
-            background:
-                rgba(16, 185, 129, 0.12);
-
+        .badge-green {
+            background: rgba(16,185,129,0.12);
             color: #6ee7b7;
         }
 
-        .protected-badge {
-            display: inline-flex;
-
-            align-items: center;
-
-            gap: 0.3rem;
-
-            padding: 0.35rem 0.65rem;
-
-            border-radius: 9999px;
-
-            font-size: 0.75rem;
-
-            font-weight: 600;
-
-            background:
-                rgba(217, 70, 239, 0.12);
-
-            color: #e879f9;
-
-            white-space: nowrap;
+        .badge-purple {
+            background: rgba(99,102,241,0.12);
+            color: #a5b4fc;
         }
 
-        /* ==========================================
-           ACTION LINKS
-        ========================================== */
+        .badge-red {
+            background: rgba(239,68,68,0.12);
+            color: #fca5a5;
+        }
 
-        .action-link {
-            display: inline-block;
-
+        .action {
             color: var(--primary);
 
             text-decoration: none;
 
             font-weight: 600;
 
-            font-size: 0.9rem;
+            margin-right: 1rem;
         }
 
-        .action-link:hover {
+        .action:hover {
             color: var(--accent);
-            text-decoration: underline;
         }
 
-        /* ==========================================
-           NO DATA
-        ========================================== */
-
-        .no-data {
-            padding: 3rem 0;
-
-            text-align: center;
-
-            color: var(--text-muted);
-
-            display: flex;
-
-            flex-direction: column;
-
-            align-items: center;
-
-            gap: 1rem;
-        }
-
-        .no-data svg {
-            width: 48px;
-            height: 48px;
-
-            stroke:
-                rgba(255, 255, 255, 0.1);
-        }
-
-        /* ==========================================
-           RESPONSIVE
-        ========================================== */
-
-        @media (max-width: 768px) {
+        @media(max-width:768px) {
 
             header {
-                padding: 1.2rem;
+                padding: 1rem;
             }
 
             main {
                 padding: 0 1rem 2rem;
             }
 
-            .glass-card {
+            .card {
                 padding: 1.25rem;
-            }
-
-            .input-group {
-                flex-direction: column;
             }
 
             .user-nav span {
                 display: none;
             }
 
+            th,
+            td {
+                white-space: nowrap;
+            }
         }
 
     </style>
@@ -781,918 +443,660 @@
 <body>
 
 
-    <!-- ==========================================
-         HEADER
-    ========================================== -->
+<header>
 
-    <header>
+    <div class="logo">
+        🔗 SnapURL
+    </div>
 
-        <div class="logo">
-
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="2"
-                stroke="currentColor"
-            >
-
-                <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"
-                />
-
-            </svg>
-
-            <span>
-                SnapURL
-            </span>
-
-        </div>
-
-
-        <div class="user-nav">
-
-            <span>
-                Welcome Back
-            </span>
-
-            <a
-                href="/user/logout"
-                class="btn-logout"
-            >
-                Logout
-            </a>
-
-        </div>
-
-    </header>
-
-
-
-    <main>
-
-
-        <!-- ==========================================
-             URL GENERATOR
-        =========================================== -->
-
-        <div
-            class="glass-card generator-section"
-        >
-
-            <h2>
-                Shorten a long link
-            </h2>
-
-
-            <!-- ERROR -->
-
-            <% if (
-                typeof error !== "undefined" &&
-                error
-            ) { %>
-
-                <div class="error-banner">
-                    <%= error %>
-                </div>
-
-            <% } %>
-
-
-
-            <!-- SUCCESS -->
-
-            <% if (
-                typeof id !== "undefined" &&
-                id
-            ) { %>
-
-                <div
-                    class="success-banner"
-                    id="successBanner"
-                >
-
-                    <div
-                        class="success-banner-content"
-                    >
-
-                        <span
-                            class="success-banner-title"
-                        >
-                            URL shortened successfully!
-                        </span>
-
-
-                        <a
-                            href="/url/<%= id %>"
-                            target="_blank"
-                            class="success-banner-link"
-                            id="generatedLink"
-                        >
-                            /url/<%= id %>
-                        </a>
-
-                    </div>
-
-
-                    <button
-                        type="button"
-                        class="btn-copy"
-                        onclick="copyToClipboard()"
-                    >
-                        Copy
-                    </button>
-
-                </div>
-
-
-                <script>
-
-                    const linkEl =
-                        document.getElementById(
-                            "generatedLink"
-                        );
-
-                    if (
-                        linkEl &&
-                        !linkEl.textContent
-                            .trim()
-                            .startsWith("http")
-                    ) {
-
-                        const fullUrl =
-                            window.location.origin +
-                            "/url/<%= id %>";
-
-                        linkEl.textContent =
-                            fullUrl;
-
-                        linkEl.href =
-                            fullUrl;
-                    }
-
-
-                    function copyToClipboard() {
-
-                        const linkText =
-                            document
-                                .getElementById(
-                                    "generatedLink"
-                                )
-                                .href;
-
-                        navigator
-                            .clipboard
-                            .writeText(
-                                linkText
-                            )
-                            .then(() => {
-
-                                const btn =
-                                    document
-                                        .querySelector(
-                                            ".btn-copy"
-                                        );
-
-                                btn.textContent =
-                                    "Copied!";
-
-                                setTimeout(
-                                    () => {
-
-                                        btn.textContent =
-                                            "Copy";
-
-                                    },
-                                    2000
-                                );
-
-                            });
-
-                    }
-
-                </script>
-
-            <% } %>
-
-
-
-            <!-- ==========================================
-                 CREATE FORM
-            =========================================== -->
-
-            <form
-    action="/url"
-    method="POST"
-    id="shortenForm"
->
-
-    <div class="input-stack">
-
-        <!-- LONG URL -->
-
-        <div class="input-group">
-
-            <input
-                type="url"
-                name="url"
-                placeholder="Enter your long URL"
-                required
-            >
-
-        </div>
-
-
-        <!-- CUSTOM ALIAS -->
-
-        <div class="input-group">
-
-            <input
-                type="text"
-                name="customAlias"
-                placeholder="Custom alias (optional)"
-                minlength="3"
-                maxlength="30"
-                pattern="[A-Za-z0-9_-]{3,30}"
-            >
-
-        </div>
-
-
-        <div class="input-help">
-
-            Use 3-30 characters:
-            letters, numbers,
-            hyphens and underscores.
-
-        </div>
-
-
-        <!-- EXPIRATION -->
-
-        <div class="input-group">
-
-            <select
-                name="expiration"
-                id="expiration"
-            >
-
-                <option value="never">
-                    Never expires
-                </option>
-
-                <option value="1h">
-                    Expires in 1 hour
-                </option>
-
-                <option value="1d">
-                    Expires in 1 day
-                </option>
-
-                <option value="7d">
-                    Expires in 7 days
-                </option>
-
-                <option value="30d">
-                    Expires in 30 days
-                </option>
-
-                <option value="custom">
-                    Custom date & time
-                </option>
-
-            </select>
-
-        </div>
-
-
-        <!-- CUSTOM EXPIRATION -->
-
-        <div
-            class="custom-date-group"
-            id="customDateGroup"
-        >
-
-            <label for="customExpiresAt">
-                Expiration date and time
-            </label>
-
-            <input
-                type="datetime-local"
-                name="customExpiresAt"
-                id="customExpiresAt"
-            >
-
-        </div>
-
-
-        <!-- ==========================================
-     PASSWORD PROTECTION
-========================================== -->
-
-<div class="password-section">
-
-    <label
-        class="password-toggle"
-        for="protectWithPassword"
-    >
-
-        <input
-            type="checkbox"
-            name="protectWithPassword"
-            id="protectWithPassword"
-            value="true"
-            <%= (typeof protectWithPassword !== 'undefined' && protectWithPassword) ? 'checked' : '' %>
-        >
+    <div class="user-nav">
 
         <span>
-            🔒 Password protect this link
+            Welcome Back
         </span>
 
-    </label>
-
-
-    <div
-        class="link-password-group"
-        id="linkPasswordGroup"
-        style="display: none;"
-    >
-
-        <input
-            type="password"
-            name="linkPassword"
-            id="linkPassword"
-            placeholder="Enter password"
-            minlength="6"
-            autocomplete="new-password"
+        <a
+            href="/user/logout"
+            class="btn-logout"
         >
-
-        <div class="input-help">
-            Minimum 6 characters.
-        </div>
+            Logout
+        </a>
 
     </div>
 
-</div>
+</header>
 
 
-        <!-- SUBMIT -->
+<main>
 
-        <button
-            type="submit"
-            class="btn-primary"
+
+    <!-- ==========================================
+         CREATE URL
+    =========================================== -->
+
+    <div class="card">
+
+        <h2>
+            Shorten a long link
+        </h2>
+
+
+        <% if (
+            typeof error !== "undefined" &&
+            error
+        ) { %>
+
+            <div class="error">
+                <%= error %>
+            </div>
+
+        <% } %>
+
+
+        <% if (
+            typeof id !== "undefined" &&
+            id
+        ) { %>
+
+            <div class="success">
+
+                <div class="success-title">
+                    URL shortened successfully!
+                </div>
+
+                <a
+                    href="/url/<%= id %>"
+                    target="_blank"
+                >
+                    <%= id %>
+                </a>
+
+            </div>
+
+        <% } %>
+
+
+        <!-- ======================================
+             IMPORTANT FORM
+        ======================================= -->
+
+        <form
+            action="/url"
+            method="POST"
+            id="shortenForm"
         >
-            Shorten URL
-        </button>
-
-    </div>
-
-</form>
-
-        </div>
 
 
+            <!-- URL -->
 
-        <!-- ==========================================
-             LINKS TABLE
-        =========================================== -->
+            <div class="form-group">
 
-        <div
-            class="glass-card table-section"
-        >
-
-            <div class="table-header">
-
-                <h2>
-                    Your shortened links
-                </h2>
+                <input
+                    type="url"
+                    name="url"
+                    placeholder="Enter your long URL"
+                    required
+                >
 
             </div>
 
 
-            <div class="table-container">
+            <!-- CUSTOM ALIAS -->
 
+            <div class="form-group">
 
-                <% if (
-                    urls &&
-                    urls.length > 0
-                ) { %>
+                <input
+                    type="text"
+                    name="customAlias"
+                    placeholder="Custom alias (optional)"
+                    minlength="3"
+                    maxlength="30"
+                    pattern="[A-Za-z0-9_-]{3,30}"
+                >
 
+                <div class="help">
+                    3-30 characters: letters,
+                    numbers, hyphens and underscores.
+                </div>
 
-                    <table>
+            </div>
 
-                        <thead>
 
-                            <tr>
+            <!-- EXPIRATION -->
 
-                                <th class="td-sno">
-                                    S.No
-                                </th>
+            <div class="form-group">
 
-                                <th>
-                                    Short URL
-                                </th>
+                <select
+                    name="expiration"
+                    id="expiration"
+                >
 
-                                <th>
-                                    Original URL
-                                </th>
+                    <option value="never">
+                        Never expires
+                    </option>
 
-                                <th>
-                                    Expiration
-                                </th>
+                    <option value="1h">
+                        Expires in 1 hour
+                    </option>
 
-                                <th>
-                                    Protection
-                                </th>
+                    <option value="1d">
+                        Expires in 1 day
+                    </option>
 
-                                <th
-                                    style="text-align: center;"
-                                >
-                                    Clicks
-                                </th>
+                    <option value="7d">
+                        Expires in 7 days
+                    </option>
 
-                                <th>
-                                    Analytics
-                                </th>
+                    <option value="30d">
+                        Expires in 30 days
+                    </option>
 
-                                <th>
-                                    QR Code
-                                </th>
+                    <option value="custom">
+                        Custom date & time
+                    </option>
 
-                            </tr>
+                </select>
 
-                        </thead>
+            </div>
 
 
-                        <tbody>
+            <!-- CUSTOM DATE -->
 
+            <div
+                class="form-group"
+                id="customDateContainer"
+                style="display:none;"
+            >
 
-                            <% urls.forEach(
-                                (url, index) => {
+                <label class="help">
+                    Expiration date and time
+                </label>
 
-                                const isExpired =
-                                    url.expiresAt &&
-                                    url.expiresAt !== "" &&
-                                    new Date(
-                                        url.expiresAt
-                                    ).getTime() <=
-                                    Date.now();
+                <input
+                    type="datetime-local"
+                    name="customExpiresAt"
+                    id="customExpiresAt"
+                >
 
-                            %>
+            </div>
 
 
-                                <tr>
+            <!-- ======================================
+                 PASSWORD SECTION
+            ======================================= -->
 
+            <div class="form-group password-section">
 
-                                    <!-- S.NO -->
 
-                                    <td class="td-sno">
-                                        <%= index + 1 %>
-                                    </td>
+                <label
+                    class="password-checkbox"
+                    for="protectWithPassword"
+                >
 
+                    <input
+                        type="checkbox"
+                        id="protectWithPassword"
+                        name="protectWithPassword"
+                        value="true"
+                    >
 
+                    <span>
+                        🔒 Password protect this link
+                    </span>
 
-                                    <!-- SHORT URL -->
+                </label>
 
-                                    <td
-                                        class="short-link-cell"
-                                    >
 
-                                        <a
-                                            href="/url/<%= url.shortId %>"
-                                            target="_blank"
-                                            class="short-link-anchor"
-                                        >
-                                            /url/<%= url.shortId %>
-                                        </a>
+                <!--
 
-                                    </td>
+                    THIS INPUT IS INSIDE THE SAME FORM.
 
+                    It has the exact name:
 
+                    linkPassword
 
-                                    <!-- ORIGINAL URL -->
+                    Therefore req.body.linkPassword
+                    will contain the entered password.
 
-                                    <td>
+                -->
 
-                                        <div
-                                            class="redirect-link-cell"
-                                            title="<%= url.redirectURL %>"
-                                        >
-                                            <%= url.redirectURL %>
-                                        </div>
+                <div class="password-box">
 
-                                    </td>
+                    <label
+                        class="password-label"
+                        for="linkPassword"
+                    >
+                        Enter password
+                    </label>
 
+                    <input
+                        class="password-input"
+                        type="password"
+                        id="linkPassword"
+                        name="linkPassword"
+                        placeholder="Enter password"
+                        minlength="6"
+                        autocomplete="new-password"
+                    >
 
-
-                                    <!-- EXPIRATION -->
-
-                                    <td>
-
-                                        <% if (
-                                            !url.expiresAt ||
-                                            url.expiresAt === ""
-                                        ) { %>
-
-                                            <span
-                                                class="expiration-badge never"
-                                            >
-                                                Never
-                                            </span>
-
-                                        <% } else if (
-                                            isExpired
-                                        ) { %>
-
-                                            <span
-                                                class="expiration-badge expired"
-                                            >
-                                                Expired
-                                            </span>
-
-                                        <% } else { %>
-
-                                            <span
-                                                class="expiration-badge"
-                                            >
-
-                                                <%= new Date(
-                                                    url.expiresAt
-                                                ).toLocaleString() %>
-
-                                            </span>
-
-                                        <% } %>
-
-                                    </td>
-
-
-
-                                    <!-- PROTECTION -->
-
-                                    <td>
-
-                                        <% if (
-                                            url.isPasswordProtected
-                                        ) { %>
-
-                                            <span
-                                                class="protected-badge"
-                                            >
-                                                🔒 Protected
-                                            </span>
-
-                                        <% } else { %>
-
-                                            <span
-                                                class="expiration-badge never"
-                                            >
-                                                Public
-                                            </span>
-
-                                        <% } %>
-
-                                    </td>
-
-
-
-                                    <!-- CLICKS -->
-
-                                    <td
-                                        style="text-align: center;"
-                                    >
-
-                                        <span
-                                            class="clicks-badge"
-                                        >
-
-                                            <%= url.visitHistory
-                                                ? url.visitHistory.length
-                                                : 0 %>
-
-                                        </span>
-
-                                    </td>
-
-
-
-                                    <!-- ANALYTICS -->
-
-                                    <td>
-
-                                        <a
-                                            href="/url/analytics/<%= url.shortId %>"
-                                            target="_blank"
-                                            class="action-link"
-                                        >
-                                            View
-                                        </a>
-
-                                    </td>
-
-
-
-                                    <!-- QR CODE -->
-
-                                    <td>
-
-                                        <a
-                                            href="/url/qr/<%= url.shortId %>"
-                                            target="_blank"
-                                            class="action-link"
-                                        >
-                                            QR
-                                        </a>
-
-                                    </td>
-
-
-                                </tr>
-
-
-                            <% }) %>
-
-
-                        </tbody>
-
-                    </table>
-
-
-                    <!-- ABSOLUTE SHORT URL -->
-
-                    <script>
-
-                        document
-                            .querySelectorAll(
-                                ".short-link-anchor"
-                            )
-                            .forEach(
-                                (el) => {
-
-                                    const relativePath =
-                                        el.getAttribute(
-                                            "href"
-                                        );
-
-                                    el.textContent =
-                                        window.location.origin +
-                                        relativePath;
-
-                                }
-                            );
-
-                    </script>
-
-
-                <% } else { %>
-
-
-                    <!-- NO DATA -->
-
-                    <div class="no-data">
-
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                        >
-
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0-6.364 6.364l4.5 4.5a4.5 4.5 0 0 0 6.364-1.242"
-                            />
-
-                        </svg>
-
-
-                        <p>
-                            No links shortened yet.
-                            Paste a link above to get started!
-                        </p>
-
+                    <div class="help">
+                        Minimum 6 characters.
                     </div>
 
-
-                <% } %>
+                </div>
 
 
             </div>
 
-        </div>
 
-    </main>
+            <!-- SUBMIT -->
 
+            <button
+                type="submit"
+                class="btn-primary"
+            >
+                Shorten URL
+            </button>
+
+
+        </form>
+
+    </div>
 
 
     <!-- ==========================================
-         EXPIRATION SCRIPT
+         URL LIST
     =========================================== -->
 
-    <script>
+    <div class="card">
 
-        document.addEventListener(
-            "DOMContentLoaded",
-            function () {
-
-                const expirationSelect =
-                    document.getElementById(
-                        "expiration"
-                    );
+        <h2>
+            Your shortened links
+        </h2>
 
 
-                const customDateGroup =
-                    document.getElementById(
-                        "customDateGroup"
-                    );
+        <% if (
+            urls &&
+            urls.length > 0
+        ) { %>
 
 
-                const customDateInput =
-                    document.getElementById(
-                        "customExpiresAt"
-                    );
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                S.No
+                            </th>
+
+                            <th>
+                                Short URL
+                            </th>
+
+                            <th>
+                                Original URL
+                            </th>
+
+                            <th>
+                                Expiration
+                            </th>
+
+                            <th>
+                                Protection
+                            </th>
+
+                            <th>
+                                Clicks
+                            </th>
+
+                            <th>
+                                Analytics
+                            </th>
+
+                            <th>
+                                QR Code
+                            </th>
+
+                        </tr>
+
+                    </thead>
 
 
-                expirationSelect.addEventListener(
-                    "change",
-                    function () {
-
-                        if (
-                            this.value === "custom"
-                        ) {
-
-                            customDateGroup.style.display =
-                                "flex";
-
-                            customDateInput.required =
-                                true;
-
-                        } else {
-
-                            customDateGroup.style.display =
-                                "none";
-
-                            customDateInput.required =
-                                false;
-
-                            customDateInput.value =
-                                "";
-
-                        }
-
-                    }
-                );
+                    <tbody>
 
 
-                // Prevent selecting past date
+                    <% urls.forEach(
+                        (url,index) => {
 
-                const now =
-                    new Date();
+                        const expired =
+                            url.expiresAt &&
+                            new Date(
+                                url.expiresAt
+                            ).getTime() <= Date.now();
+
+                    %>
 
 
-                now.setMinutes(
-                    now.getMinutes() -
-                    now.getTimezoneOffset()
-                );
+                        <tr>
+
+                            <td>
+                                <%= index + 1 %>
+                            </td>
 
 
-                customDateInput.min =
-                    now.toISOString().slice(
-                        0,
-                        16
-                    );
+                            <td>
 
-            }
+                                <a
+                                    class="short-link"
+                                    href="/url/<%= url.shortId %>"
+                                    target="_blank"
+                                >
+                                    <%= url.shortId %>
+                                </a>
+
+                            </td>
+
+
+                            <td>
+
+                                <div
+                                    class="original-url"
+                                    title="<%= url.redirectURL %>"
+                                >
+                                    <%= url.redirectURL %>
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <% if (
+                                    !url.expiresAt
+                                ) { %>
+
+                                    <span
+                                        class="badge badge-green"
+                                    >
+                                        Never
+                                    </span>
+
+                                <% } else if (
+                                    expired
+                                ) { %>
+
+                                    <span
+                                        class="badge badge-red"
+                                    >
+                                        Expired
+                                    </span>
+
+                                <% } else { %>
+
+                                    <span
+                                        class="badge badge-purple"
+                                    >
+                                        <%= new Date(
+                                            url.expiresAt
+                                        ).toLocaleString() %>
+                                    </span>
+
+                                <% } %>
+
+                            </td>
+
+
+                            <td>
+
+                                <% if (
+                                    url.isPasswordProtected === true ||
+                                    url.isPasswordProtected === "true"
+                                ) { %>
+
+                                    <span
+                                        class="badge badge-purple"
+                                    >
+                                        🔒 Protected
+                                    </span>
+
+                                <% } else { %>
+
+                                    <span
+                                        class="badge badge-green"
+                                    >
+                                        Public
+                                    </span>
+
+                                <% } %>
+
+                            </td>
+
+
+                            <td>
+
+                                <span
+                                    class="badge badge-purple"
+                                >
+                                    <%= Array.isArray(
+                                        url.visitHistory
+                                    )
+                                        ? url.visitHistory.length
+                                        : 0
+                                    %>
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <a
+                                    class="action"
+                                    href="/url/analytics/<%= url.shortId %>"
+                                    target="_blank"
+                                >
+                                    View
+                                </a>
+
+                            </td>
+
+
+                            <td>
+
+                                <a
+                                    class="action"
+                                    href="/url/qr/<%= url.shortId %>"
+                                    target="_blank"
+                                >
+                                    QR
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+
+                    <% }) %>
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+        <% } else { %>
+
+
+            <div
+                style="
+                    text-align:center;
+                    color:#9ca3af;
+                    padding:3rem;
+                "
+            >
+
+                No links shortened yet.
+
+            </div>
+
+
+        <% } %>
+
+
+    </div>
+
+
+</main>
+
+
+<script>
+
+    /*
+     * CUSTOM EXPIRATION
+     */
+
+    const expiration =
+        document.getElementById(
+            "expiration"
         );
 
-    </script>
+    const customDateContainer =
+        document.getElementById(
+            "customDateContainer"
+        );
+
+    const customExpiresAt =
+        document.getElementById(
+            "customExpiresAt"
+        );
 
 
+    expiration.addEventListener(
+        "change",
+        function () {
 
-    <!-- ==========================================
-         PASSWORD PROTECTION SCRIPT
-    =========================================== -->
+            if (
+                this.value === "custom"
+            ) {
 
-    <script>
+                customDateContainer.style.display =
+                    "block";
 
-    document.addEventListener("DOMContentLoaded", function () {
-
-        const protectCheckbox =
-            document.getElementById("protectWithPassword");
-
-        const passwordGroup =
-            document.getElementById("linkPasswordGroup");
-
-        const passwordInput =
-            document.getElementById("linkPassword");
-
-
-        if (!protectCheckbox) {
-            console.error(
-                "protectWithPassword checkbox not found"
-            );
-            return;
-        }
-
-
-        if (!passwordGroup) {
-            console.error(
-                "linkPasswordGroup not found"
-            );
-            return;
-        }
-
-
-        if (!passwordInput) {
-            console.error(
-                "linkPassword input not found"
-            );
-            return;
-        }
-
-
-        function updatePasswordField() {
-
-            if (protectCheckbox.checked) {
-
-                passwordGroup.style.display = "flex";
-
-                passwordInput.disabled = false;
-
-                passwordInput.required = true;
+                customExpiresAt.required =
+                    true;
 
             } else {
 
-                passwordGroup.style.display = "none";
+                customDateContainer.style.display =
+                    "none";
 
-                passwordInput.disabled = true;
+                customExpiresAt.required =
+                    false;
 
-                passwordInput.required = false;
-
-                passwordInput.value = "";
+                customExpiresAt.value =
+                    "";
 
             }
 
         }
+    );
 
 
-        protectCheckbox.addEventListener(
-            "change",
-            updatePasswordField
+    /*
+     * PASSWORD VALIDATION
+     *
+     * This does NOT control whether the
+     * password input exists.
+     *
+     * The input is always physically inside
+     * the form.
+     */
+
+    const form =
+        document.getElementById(
+            "shortenForm"
+        );
+
+    const passwordCheckbox =
+        document.getElementById(
+            "protectWithPassword"
+        );
+
+    const passwordInput =
+        document.getElementById(
+            "linkPassword"
         );
 
 
-        updatePasswordField();
+    form.addEventListener(
+        "submit",
+        function (event) {
 
-
-        // --------------------------------------
-        // DEBUG
-        // --------------------------------------
-
-        const form =
-            protectCheckbox.closest("form");
-
-
-        if (form) {
-
-            form.addEventListener(
-                "submit",
-                function () {
-
-                    console.log(
-                        "========== FORM SUBMIT =========="
-                    );
-
-                    console.log(
-                        "Password checkbox:",
-                        protectCheckbox.checked
-                    );
-
-                    console.log(
-                        "Password value:",
-                        passwordInput.value
-                            ? "YES"
-                            : "NO"
-                    );
-
-                    console.log(
-                        "Password length:",
-                        passwordInput.value.length
-                    );
-
-                }
+            console.log(
+                "========== FORM SUBMIT =========="
             );
 
-        }
+            console.log(
+                "Password checkbox:",
+                passwordCheckbox.checked
+            );
 
-    });
+            console.log(
+                "Password value:",
+                passwordInput.value
+            );
+
+
+            if (
+                passwordCheckbox.checked
+            ) {
+
+                if (
+                    !passwordInput.value ||
+                    passwordInput.value.trim() === ""
+                ) {
+
+                    event.preventDefault();
+
+                    alert(
+                        "Please enter a password for this link."
+                    );
+
+                    passwordInput.focus();
+
+                    return;
+                }
+
+
+                if (
+                    passwordInput.value.length < 6
+                ) {
+
+                    event.preventDefault();
+
+                    alert(
+                        "Password must be at least 6 characters."
+                    );
+
+                    passwordInput.focus();
+
+                    return;
+                }
+
+            }
+
+        }
+    );
 
 </script>
 
+
 </body>
 
-</html>
+</html>

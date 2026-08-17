@@ -171,8 +171,8 @@ async function handleGenerateNewShortURL(req, res) {
          */
 
         const isPasswordProtected =
-            protectWithPassword === "on" ||
             protectWithPassword === "true" ||
+            protectWithPassword === "on" ||
             protectWithPassword === true;
 
 
