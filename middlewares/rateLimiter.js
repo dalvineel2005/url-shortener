@@ -2,7 +2,9 @@ const rateLimit = require("express-rate-limit");
 
 
 // ==========================================
-// AUTH RATE LIMITER
+// AUTH RATE LIMITER (login)
+// Only failed attempts count, and the error is
+// shown on the login page instead of raw JSON.
 // ==========================================
 
 const authRateLimiter = rateLimit({
@@ -11,13 +13,16 @@ const authRateLimiter = rateLimit({
 
     limit: 10,
 
+    skipSuccessfulRequests: true,
+
     standardHeaders: "draft-8",
 
     legacyHeaders: false,
 
-    message: {
-        error:
-            "Too many authentication attempts. Please try again later.",
+    handler: (req, res) => {
+        return res.status(429).render("login", {
+            error: "Too many login attempts. Please try again in 15 minutes.",
+        });
     },
 
 });
@@ -37,9 +42,10 @@ const signupRateLimiter = rateLimit({
 
     legacyHeaders: false,
 
-    message: {
-        error:
-            "Too many signup attempts. Please try again later.",
+    handler: (req, res) => {
+        return res.status(429).render("signup", {
+            error: "Too many signup attempts. Please try again later.",
+        });
     },
 
 });

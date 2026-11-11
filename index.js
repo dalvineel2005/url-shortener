@@ -75,6 +75,9 @@ const PORT =
 // VIEW ENGINE
 // ==========================================
 
+// Behind Vercel/proxies: use the real client IP (needed by rate limiter)
+app.set("trust proxy", 1);
+
 app.set(
     "view engine",
     "ejs"
