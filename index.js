@@ -96,8 +96,17 @@ app.set(
 // SECURITY
 // ==========================================
 
+// form-action must allow external sites: after the password form is
+// submitted we redirect to the destination URL, and browsers apply
+// form-action to that redirect too.
 app.use(
-    helmet()
+    helmet({
+        contentSecurityPolicy: {
+            directives: {
+                "form-action": ["'self'", "https:", "http:"],
+            },
+        },
+    })
 );
 
 
